@@ -31,6 +31,7 @@ export default function Thanhtoan() {
   const [cities, setCities] = useState([])
   const [districts, setDistricts] = useState([])
   const [wards, setWards] = useState([])
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const userData = localStorage.getItem("userData")
   const user = userData ? JSON.parse(userData).user : null
@@ -106,6 +107,7 @@ export default function Thanhtoan() {
     "Chọn ngân hàng",
     "Vietcombank",
     "BIDV",
+    "NCB",
     "VietinBank",
     "Techcombank",
     "MBBank",
@@ -193,24 +195,58 @@ export default function Thanhtoan() {
   }
 
   const handlePayment = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!isBankTransfer) {
-      alert("Vui lòng chọn phương thức thanh toán chuyển khoản")
-      return
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    // Validate form
+    const errors = validateForm();
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      setIsSubmitting(false);
+      return;
     }
 
-    const formDataValues = {
-      hovaten: titles.join(", "),
-      tongtienclient: tongcart,
-      nganhangclient,
-      madonhangclient: madonhang,
-      dkdn_id: userId,
-      thanhtien: tongcart,
-    }
+    try {
+      // Lưu thông tin form để sử dụng sau khi thanh toán thành công
+      const formData = {
+        hovaten,
+        diachi,
+        tinh: tinhtp,
+        quanhuyen,
+        phuongxa,
+        sdt,
+        thongtinbosung,
+        pttt: "Thanh toán VNPAY",
+        sanpham: titles.join(", "),
+        dkdn_id: userId,
+        thanhtien: tongcart,
+        tinhtrangdon: "Chờ thanh toán",
+        madonhang
+      };
 
-    localStorage.setItem("formData", JSON.stringify(formDataValues))
-  }
+      localStorage.setItem("formData", JSON.stringify(formData));
+
+      // Gọi API thanh toán VNPAY
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASEURL}/api/vnpay-payment`,
+        {
+          amount: tongcart,
+          orderId: madonhang
+        }
+      );
+
+      // Chuyển hướng đến trang thanh toán VNPAY
+      window.location.href = response.data.paymentUrl;
+
+    } catch (err) {
+      console.log(err);
+      alert("Có lỗi xảy ra khi thanh toán!");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const handlePaymentCompletion = async () => {
@@ -485,11 +521,19 @@ export default function Thanhtoan() {
               </div>
 
               {isBankTransfer ? (
-                <button onClick={handlePayment}>
-                  <Link to="/checkout">Thanh toán qua VNPAY</Link>
+                <button
+                  onClick={handlePayment}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Đang xử lý...' : 'Thanh toán qua VNPAY'}
                 </button>
               ) : (
-                <button type="submit">Đặt hàng</button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Đang xử lý...' : 'Đặt hàng'}
+                </button>
               )}
             </form>
           </div>

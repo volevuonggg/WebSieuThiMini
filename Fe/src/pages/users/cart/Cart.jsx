@@ -108,7 +108,6 @@ export default function Cart() {
                         </td>
                         <td>
                           <span className="product-title">{giohang.title}</span>
-                          <span className="product-size">Size: {giohang.size}</span>
                         </td>
                         <td className="product-price">{formatPrice(giohang.gia)}</td>
                         <td className="product-quantity">{giohang.soluong}</td>

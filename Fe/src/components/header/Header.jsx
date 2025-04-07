@@ -36,7 +36,7 @@ export default function Header() {
 
             </ul>
           </li>
-          <li><Link to="/">Góc cửa hàng</Link></li>
+          <li><Link to="/goccuahang">Góc cửa hàng</Link></li>
           <li className="dropdown">
             <Link to="/">Hot Deal <AiFillCaretDown /></Link>
             <ul className="dropdown-content">

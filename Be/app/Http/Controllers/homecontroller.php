@@ -22,10 +22,10 @@ class homecontroller extends Controller
      */
     public function index()
     {
-        $thucphamtuoisong = product::where('category_id', 1)->orderBy('id', 'DESC')->take(8)->get();
-        $raucuqua = product::where('category_id', 2)->orderBy('id', 'DESC')->take(8)->get();
-        $douonggiaikhat = product::where('category_id', 3)->orderBy('id', 'DESC')->take(8)->get();
-        $thucphamanlien = product::where('category_id', 5)->orderBy('id', 'DESC')->take(8)->get();
+        $thucphamtuoisong = product::where('category_id', 1)->orderBy('id', 'DESC')->take(10)->get();
+        $raucuqua = product::where('category_id', 2)->orderBy('id', 'DESC')->take(10)->get();
+        $douonggiaikhat = product::where('category_id', 3)->orderBy('id', 'DESC')->take(10)->get();
+        $thucphamanlien = product::where('category_id', 5)->orderBy('id', 'DESC')->take(10)->get();
 
         $data = [
 

@@ -3,6 +3,12 @@ import "./Goccuahang.css"
 import { Link } from "react-router-dom"
 import Header from "../../../components/header/Header"
 import Footer from "../../../components/footer/Footer"
+import heroImage from "../../../assets/users/goccuahang/hero-image.jpg"
+import storyImage from "../../../assets/users/goccuahang/store-story.jpg"
+import vegetables from "../../../assets/users/goccuahang/vegetables.jpg"
+import drinks from "../../../assets/users/goccuahang/drinks.jpg"
+import thucphamanlien from "../../../assets/users/goccuahang/thucphamanlien.jpg"
+import thucphamtuoisong from "../../../assets/users/goccuahang/thucphamtuoisong.jpg"
 
 export default function Goccuahang() {
     const [isVisible, setIsVisible] = useState({
@@ -55,23 +61,23 @@ export default function Goccuahang() {
     const productCategories = [
         {
             name: "Rau củ tươi ngon",
-            image: `${process.env.REACT_APP_BASEURL}/upload/vegetables.jpg`,
+            image: vegetables,
             description: "Rau củ tươi ngon, được trồng theo phương pháp hữu cơ, đảm bảo an toàn cho sức khỏe.",
         },
         {
-            name: "Trái cây theo mùa",
-            image: `${process.env.REACT_APP_BASEURL}/upload/fruits.jpg`,
-            description: "Trái cây tươi ngon theo mùa, được nhập từ các vùng trồng nổi tiếng trong nước.",
+            name: "Đồ uống giải khát",
+            image: drinks,
+            description: "Đồ uống tươi mát, bổ sung năng lượng cho ngày dài",
         },
         {
-            name: "Thực phẩm khô",
-            image: `${process.env.REACT_APP_BASEURL}/upload/dry-foods.jpg`,
-            description: "Các loại hạt, đậu, ngũ cốc chất lượng cao, giàu dinh dưỡng.",
+            name: "Thực phẩm ăn liền",
+            image: thucphamanlien,
+            description: "Thực phẩm ăn liền tiện lợi, dễ chế biến, phù hợp cho những ngày bận rộn.",
         },
         {
-            name: "Thực phẩm chế biến",
-            image: `${process.env.REACT_APP_BASEURL}/upload/processed-foods.jpg`,
-            description: "Thực phẩm chế biến sẵn, tiện lợi nhưng vẫn đảm bảo dinh dưỡng và an toàn.",
+            name: "Thực phẩm tươi sống",
+            image: thucphamtuoisong,
+            description: "Thực phẩm tươi sống, được chọn lọc kỹ càng từ các nhà cung cấp uy tín.",
         },
     ]
 
@@ -141,7 +147,7 @@ export default function Goccuahang() {
                     <div className="hero-overlay"></div>
                     <div className="hero-image-container">
                         <img
-                            src={`${process.env.REACT_APP_BASEURL}/upload/hero-image.jpg`}
+                            src={heroImage}
                             alt="Thực phẩm sạch"
                             className="hero-image"
                             onError={(e) => {
@@ -171,7 +177,7 @@ export default function Goccuahang() {
                     <div className="about-content">
                         <div className="about-image-container">
                             <img
-                                src={`${process.env.REACT_APP_BASEURL}/upload/store-story.jpg`}
+                                src={storyImage}
                                 alt="Câu chuyện cửa hàng"
                                 className="about-image"
                                 onError={(e) => {
