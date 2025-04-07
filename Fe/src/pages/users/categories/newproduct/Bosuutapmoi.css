@@ -1,0 +1,163 @@
+/* General styles */
+.wrapper {
+    background: #fff;
+    font-family: 'Arial', sans-serif;
+    color: #2c5282;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    flex: 1;
+    padding-bottom: 50px; /* Add padding at the bottom */
+}
+
+/* Category title */
+.tieudecategory {
+    margin: 20px 0;
+}
+
+.tieudecategory p {
+    color: #718096;
+    font-size: 14px;
+}
+
+.tieudecategory span {
+    color: #2c5282;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Main container */
+.containercategory {
+    display: flex;
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.leftcategory {
+    width: 20%;
+}
+
+.danhmuc {
+    background: #f0f9ff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.danhmuc h3 {
+    color: #2c5282;
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.list-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-group li {
+    padding: 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.list-group li:last-child {
+    border-bottom: none;
+}
+
+.list-group li a {
+    text-decoration: none;
+    color: #2c5282;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.list-group li a:hover {
+    color: #68d391;
+}
+
+.rightcategory {
+    width: 80%;
+}
+
+.rightcategory img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Product grid */
+.categoryproduct {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.food-item {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.food-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.food-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.food-title a {
+    color: #2c5282;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    transition: color 0.3s;
+}
+
+.food-title a:hover {
+    color: #68d391;
+}
+
+.food-price {
+    color: #68d391;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Cart icon */
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #68d391;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
