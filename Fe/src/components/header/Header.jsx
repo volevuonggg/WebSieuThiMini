@@ -65,6 +65,9 @@ export default function Header() {
             </ul>
           </li>
           <li><Link to="/">Liên hệ</Link></li>
+
+          <li><Link to="/kiemtradon">Kiểm tra đơn hàng</Link></li>
+
           <li className="cart-icon">
             <Link to="/Cart">
               Giỏ hàng <BsFillCartFill />
