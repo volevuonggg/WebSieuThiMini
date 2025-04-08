@@ -129,7 +129,7 @@ export default function Cart() {
                     <span>Tổng</span>
                     <span className="total-amount">{formatPrice(tongcart)}</span>
                   </div>
-                  <Link to="/Thanhtoan" className="checkout-btn">
+                  <Link to="/thanh-toan" className="checkout-btn">
                     TIẾN HÀNH THANH TOÁN
                   </Link>
                 </div>

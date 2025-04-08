@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\cart;
 use App\Models\dondathang;
 use App\Models\checkout;
@@ -13,27 +14,24 @@ class checkoutcontroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index(Request $request)
     {
-        $vnpay = checkout::where('dkdn_id', $id)->orderBy('id', 'DESC')->first();
-        $madonhang = $vnpay->madonhang;
-        $tensp = $vnpay->sanpham;
-        $sotien = $vnpay->sotien;
-        $nganhang = $vnpay->nganhang;
-    
+        // Lấy dữ liệu từ request thay vì database
+        $madonhang = $request->orderId;
+        $sotien = $request->amount;
+
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:3000/checkout";
-        $vnp_TmnCode = "TTDNK2QV"; // Mã website tại VNPAY 
-        $vnp_HashSecret = "VKGITZFIBQDDKBQWRABCVPZUVGPYXSFY"; // Chuỗi bí mật
-    
-        $vnp_TxnRef = $madonhang; // Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = 'mua quan ao';
+        $vnp_ReturnUrl = "http://localhost:3000/thanh-toan";
+        $vnp_TmnCode = "FSG1L7C8";
+        $vnp_HashSecret = "6XULDMA8EL63R00RAC3LE9F6L7YLFLOS";
+
+        $vnp_TxnRef = $madonhang;
+        $vnp_OrderInfo = 'Thanh toan don hang';
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $sotien * 100;
         $vnp_Locale = 'vn';
-        $vnp_BankCode = $nganhang;
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-    
+        $vnp_IpAddr = request()->ip();
+
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
@@ -45,38 +43,21 @@ class checkoutcontroller extends Controller
             "vnp_Locale" => $vnp_Locale,
             "vnp_OrderInfo" => $vnp_OrderInfo,
             "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef,
+            "vnp_ReturnUrl" => $vnp_ReturnUrl,
+            "vnp_TxnRef" => $vnp_TxnRef
         );
-    
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-        }
-    
+
         ksort($inputData);
         $query = http_build_query($inputData);
         $hashdata = hash_hmac('sha512', $query, $vnp_HashSecret);
-    
         $vnp_Url .= "?" . $query . '&vnp_SecureHash=' . $hashdata;
-    
-        if (isset($_POST['redirect'])) {
-            header('Location: ' . $vnp_Url);
-            die();
-        } else {
-            echo json_encode([
-                'code' => '00',
-                'message' => 'success', // Set the appropriate value based on the condition
-                'data' => $vnp_Url
-            ]);
-        }
-      
+
+        return response()->json([
+            'code' => '00',
+            'message' => 'success',
+            'data' => $vnp_Url
+        ]);
     }
-    
-    
-    
 
     /**
      * Show the form for creating a new resource.
@@ -99,7 +80,7 @@ class checkoutcontroller extends Controller
         $vnpay = new checkout;
         $vnpay->sanpham = $request['tenspclient'];
         $vnpay->sotien = $request['tongtienclient'];
-     
+
         $vnpay->nganhang = $request['nganhangclient'];
         $vnpay->madonhang = $request['madonhangclient'];
         $vnpay->dkdn_id = $request['dkdn_id'];
@@ -117,7 +98,7 @@ class checkoutcontroller extends Controller
      */
     public function show($id)
     {
-        $thongtin = cart::where('dkdn_id',$id)->get();
+        $thongtin = cart::where('dkdn_id', $id)->get();
 
         return response()->json($thongtin);
     }
@@ -128,10 +109,7 @@ class checkoutcontroller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        
-    }
+    public function edit($id) {}
 
     /**
      * Update the specified resource in storage.
@@ -155,5 +133,4 @@ class checkoutcontroller extends Controller
     {
         //
     }
-
 }

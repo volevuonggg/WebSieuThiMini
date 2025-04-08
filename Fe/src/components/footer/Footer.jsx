@@ -44,7 +44,7 @@ const Footer = () => {
           <ul className="contact-info">
             <li>
               <FaMapMarkerAlt className="contact-icon" />
-              <span>123 Đường ABC, Quận XYZ, TP.HCM</span>
+              <span>18A Cộng Hòa, Quận Tân Bình, TP.HCM</span>
             </li>
             <li>
               <FaPhone className="contact-icon" />

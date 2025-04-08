@@ -1,0 +1,121 @@
+.chat-container {
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    cursor: pointer;
+}
+
+/* ChatBox.css */
+
+/* ChatBox.css */
+
+.chatbox-container {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 320px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .chatbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f7f7f7;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e2e2;
+  }
+  
+  .chatbox-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .chatbox-header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+  }
+  
+  .chatbox-messages {
+    flex: 1;
+    min-height: 200px; /* 👈 gives it a nice default height */
+    max-height: 300px;
+    padding: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #fafafa;
+  }
+  
+  
+  .chatbox-message {
+    padding: 10px 14px;
+    max-width: 80%;
+    border-radius: 18px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    font-size: 14px;
+  }
+  
+  .user-message {
+    background-color: #d0f0c0;
+    align-self: flex-end;
+    text-align: right;
+  }
+  
+  .bot-message {
+    background-color: #e0e0e0;
+    align-self: flex-start;
+    text-align: left;
+  }
+  
+  .chatbox-input {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+  }
+  
+  .chatbox-input input {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+  
+  .chatbox-input button {
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 12px;
+    border: none;
+    background-color: #d0f0c0;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .chatbox-input button:hover {
+    background-color: #d0f0c0;
+  }
+  
+  

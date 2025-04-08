@@ -1,104 +1,90 @@
-:root {
-    --primary-color: #6eaa5e;
-    --error-color: #ff4d4d;
-    --success-color: #4caf50;
-    --text-color: #2c3e50;
-    --bg-gradient: linear-gradient(120deg, #f6fff4 0%, #e8f5e9 100%);
-}
-
-.login-container {
-    min-height: 100vh;
+.admin-login-container {
+    height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: var(--bg-gradient);
-    padding: 20px;
+    justify-content: center;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
 }
 
-.login-form {
+.admin-login-box {
     background: white;
-    width: 100%;
-    max-width: 800px;
     padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.login-form h2 {
-    color: var(--text-color);
-    text-align: center;
-    font-size: 2.5em;
-    margin-bottom: 40px;
-    font-weight: 600;
-}
-
-.form-group {
-    margin-bottom: 25px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 10px;
-    color: var(--text-color);
-    font-size: 1.1em;
-    font-weight: 500;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 15px 20px;
-    font-size: 1.1em;
-    border: 2px solid #e0e0e0;
     border-radius: 10px;
-    transition: all 0.3s ease;
-    background: #f8f9fa;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
 }
 
-.form-group input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(110, 170, 94, 0.1);
+.admin-login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.admin-login-header h2 {
+    color: #2a5298;
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.admin-login-header p {
+    color: #666;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.admin-login-form .form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.admin-login-form .form-group label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.admin-login-form .form-group input {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.admin-login-form .form-group input:focus {
+    border-color: #2a5298;
+    box-shadow: 0 0 0 2px rgba(42, 82, 152, 0.2);
     outline: none;
 }
 
-.login-form button {
+.admin-login-button {
     width: 100%;
-    padding: 15px;
-    margin-top: 20px;
-    background-color: var(--primary-color);
+    padding: 12px;
+    background: #2a5298;
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 1.2em;
+    border-radius: 5px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease;
 }
 
-.login-form button:hover {
-    background-color: #5c9150;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(110, 170, 94, 0.4);
-}
-
-@media (max-width: 768px) {
-    .login-form {
-        padding: 30px;
-        max-width: 90%;
-    }
+.admin-login-button:hover {
+    background: #1e3c72;
 }
 
 @media (max-width: 480px) {
-    .login-form {
+    .admin-login-box {
         padding: 20px;
+        margin: 20px;
     }
 
-    .login-form h2 {
-        font-size: 2em;
-    }
-
-    .form-group input,
-    .login-form button {
-        padding: 12px;
-        font-size: 1em;
+    .admin-login-header h2 {
+        font-size: 24px;
     }
 }

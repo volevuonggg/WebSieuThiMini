@@ -1,74 +1,85 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaTrashAlt } from 'react-icons/fa'
+import { FaTrashAlt, FaUserCircle } from 'react-icons/fa';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import { useParams } from 'react-router-dom';
-
+import '../../style/admin.css';
 
 export default function Thongtinkh() {
   const [data, setdata] = useState([]);
-  const { id } = useParams();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASEURL}/api/thongtinkhachhang`)
       .then((response) => {
         setdata(response.data);
       })
-  }, [])
+  }, []);
+
   const handledelete = (id) => {
-    axios.delete(`${process.env.REACT_APP_BASEURL}/api/thongtinkhachhang/${id}`)
-    alert('xóa thành công');
-    window.location.reload();
-  }
+    if (window.confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+      axios.delete(`${process.env.REACT_APP_BASEURL}/api/thongtinkhachhang/${id}`)
+        .then(() => {
+          alert('Xóa thành công');
+          setdata(data.filter(item => item.id !== id));
+        });
+    }
+  };
+
 
   return (
-    <div>
+    <div className="admin-layout">
       <Navbar />
-      <div class="container-fluid" id="main">
-        <div class="row row-offcanvas row-offcanvas-left">
-          <Sidebar />
-          <div className='custom-margin-top'>
-            <div className='custom-margin-top'>
-              <h2>danh sách đơn hàng đã đặt</h2>
+      <div className="admin-container">
+        <Sidebar
+          isOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
+        <div className={`content-wrapper ${!isSidebarOpen ? 'expanded' : ''}`}>
+          <div className="page-header">
+            <h2>
+              <FaUserCircle className="header-icon" />
+              Danh Sách Người Dùng
+            </h2>
+            <p>Tổng số người dùng: {data.length}</p>
+          </div>
 
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">email</th>
-                    <th scope="col">mật khẩu</th>
-                    <th scope="col">họ tên</th>
-                    <th scope="col">số điện thoại</th>
-
-                    <th scope="col">xóa</th>
+          <div className="table-container">
+            <table className="custom-table">
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Họ Tên</th>
+                  <th>Số Điện Thoại</th>
+                  <th>Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.email}</td>
+                    <td>{user.name}</td>
+                    <td>{user.sdt}</td>
+                    <td>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handledelete(user.id)}
+                        title="Xóa người dùng"
+                      >
+                        <FaTrashAlt />
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {
-                    data.map((donhang) => {
-                      return (
-                        <tr>
-
-                          <td>{donhang.email}</td>
-                          <td>{donhang.password}</td>
-                          <td>{donhang.name}</td>
-                          <td>{donhang.sdt}</td>
-
-                          <td><button onClick={() => handledelete(donhang.id)}><FaTrashAlt /></button></td>
-                        </tr>
-                      );
-                    })
-                  }
-
-
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

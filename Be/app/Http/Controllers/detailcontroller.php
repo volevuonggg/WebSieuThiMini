@@ -15,7 +15,7 @@ class detailcontroller extends Controller
      */
     public function index()
     {
-        $detail = product::with('detail','category')->get();
+        $detail = product::with('detail', 'category')->get();
         return response()->json($detail);
     }
 
@@ -39,7 +39,7 @@ class detailcontroller extends Controller
     {
         // Kiểm tra xem sản phẩm đã có chi tiết chưa
         $check_detail = detail::where('product_id', $request['product_id'])->first();
-        
+
         if ($check_detail) {
             // Nếu đã có chi tiết rồi thì trả về thông báo
             return response()->json(['error' => 'Chi tiết sản phẩm đã tồn tại']);
@@ -50,9 +50,9 @@ class detailcontroller extends Controller
             $add_detail->tinhtrang = $request['tinhtrang'];
             $add_detail->chatlieu = $request['chatlieu'];
             $add_detail->themanhsp = $request['themanhsp'];
-    
+
             $add_detail->save();
-    
+
             return response()->json($add_detail);
         }
     }
@@ -65,10 +65,9 @@ class detailcontroller extends Controller
      */
     public function show($id)
     {
-       
-        $detail = detail::with('product')->where('product_id',$id)->first();
+
+        $detail = detail::with('product')->where('product_id', $id)->first();
         return response()->json($detail);
-       
     }
 
     /**
@@ -91,7 +90,25 @@ class detailcontroller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $detail = detail::findOrFail($id);
+
+            $detail->update([
+                'tinhtrang' => $request->tinhtrang,
+                'chatlieu' => $request->chatlieu,
+                'themanhsp' => $request->themanhsp
+            ]);
+
+            return response()->json([
+                'message' => 'Cập nhật thành công',
+                'data' => $detail
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Có lỗi xảy ra',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -104,13 +121,15 @@ class detailcontroller extends Controller
     {
         //
     }
-    public function detailthongtin(){
+    public function detailthongtin()
+    {
         $detailthongtin = detail::all();
         return response()->json($detailthongtin);
     }
 
-    public function deletedetailproduct($id){
-        $detail_product = detail::where('id',$id)->first();
+    public function deletedetailproduct($id)
+    {
+        $detail_product = detail::where('id', $id)->first();
 
         $detail_product->delete();
 

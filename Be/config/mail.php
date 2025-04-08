@@ -39,7 +39,7 @@ return [
             'host' => 'smtp.gmail.com',
             'port' => 587,
             'encryption' => 'tls',
-            'username' => 'phehoan@gmail.com',
+            'username' => 'chamsockhachhang.sieuthimini@gmail.com',
             'password' => 'klvyffgrgdrrsjpm',
             'timeout' => null,
             'auth_mode' => null,
@@ -92,7 +92,7 @@ return [
     */
 
     'from' => [
-        'address' => 'phehoan@gmail.com',
+        'address' => 'chamsockhachhang.sieuthimini@gmail.com',
         'name' =>  'quản trị viên',
     ],
 

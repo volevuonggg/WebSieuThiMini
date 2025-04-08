@@ -2,17 +2,36 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillCaretDown } from 'react-icons/ai';
 import { BsFillCartFill } from 'react-icons/bs';
+import axios from 'axios'; // Thêm import axios
 import './Header.css';
 
 export default function Header() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [cartCount, setCartCount] = useState(0); // Thêm state mới
 
   useEffect(() => {
     const userData = localStorage.getItem('userData');
     if (userData) {
       setUser(JSON.parse(userData).user);
     }
+  }, []);
+
+  // Thêm useEffect để lấy số lượng sản phẩm
+  useEffect(() => {
+    const fetchCartCount = async () => {
+      const userData = localStorage.getItem('userData');
+      if (userData) {
+        const userId = JSON.parse(userData).user.id;
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_BASEURL}/api/users/${userId}/slsptgh`);
+          setCartCount(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    fetchCartCount();
   }, []);
 
   const handleLogout = () => {
@@ -45,10 +64,13 @@ export default function Header() {
               <li><Link to="/category/xahang">Xả hàng</Link></li>
             </ul>
           </li>
-          <li><Link to="/">Tuyển dụng</Link></li>
-          <li><Link to="/">Feedback</Link></li>
           <li><Link to="/">Liên hệ</Link></li>
-          <li><Link to="/Cart">Giỏ hàng <BsFillCartFill /></Link></li>
+          <li className="cart-icon">
+            <Link to="/Cart">
+              Giỏ hàng <BsFillCartFill />
+              {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+            </Link>
+          </li>
         </ul>
 
         <div className="login-register">
@@ -73,4 +95,4 @@ export default function Header() {
       </div>
     </div>
   );
-} 
+}

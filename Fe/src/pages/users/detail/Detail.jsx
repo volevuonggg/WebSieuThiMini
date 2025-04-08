@@ -72,6 +72,13 @@ export default function Detail() {
 
 	async function save(event) {
 		event.preventDefault()
+
+		// Kiểm tra tình trạng hàng
+		if (detail.tinhtrang.toLowerCase() === "hết hàng") {
+			alert("Sản phẩm này hiện đã hết hàng!")
+			return
+		}
+
 		try {
 			const formData = new FormData()
 			formData.append("title", detailtitle)
@@ -140,16 +147,35 @@ export default function Detail() {
 
 						<form onSubmit={save} className="detail-add-to-cart-form">
 							<div className="detail-quantity-control">
-								<button type="button" onClick={down} className="detail-quantity-btn">
+								<button
+									type="button"
+									onClick={down}
+									className="detail-quantity-btn"
+									disabled={detail.tinhtrang.toLowerCase() === "hết hàng"}
+								>
 									-
 								</button>
-								<input type="text" value={slsp} readOnly className="detail-quantity-input" />
-								<button type="button" onClick={up} className="detail-quantity-btn">
+								<input
+									type="text"
+									value={slsp}
+									readOnly
+									className="detail-quantity-input"
+								/>
+								<button
+									type="button"
+									onClick={up}
+									className="detail-quantity-btn"
+									disabled={detail.tinhtrang.toLowerCase() === "hết hàng"}
+								>
 									+
 								</button>
 								<span className="quantity-label">Số lượng</span>
 							</div>
-							<button type="submit" className="detail-add-to-cart-btn">
+							<button
+								type="submit"
+								className={`detail-add-to-cart-btn ${detail.tinhtrang.toLowerCase() === "hết hàng" ? 'disabled' : ''}`}
+								disabled={detail.tinhtrang.toLowerCase() === "hết hàng"}
+							>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="20"
@@ -165,7 +191,7 @@ export default function Detail() {
 									<circle cx="20" cy="21" r="1"></circle>
 									<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
 								</svg>
-								Thêm vào giỏ hàng
+								{detail.tinhtrang.toLowerCase() === "hết hàng" ? 'Hết hàng' : 'Thêm vào giỏ hàng'}
 							</button>
 						</form>
 

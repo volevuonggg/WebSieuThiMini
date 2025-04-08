@@ -33,16 +33,10 @@ import Vdcscc from './pages/users/thegioicuaphaidep/Vdcscc';
 import Checkout from './pages/users/checkout/Checkout';
 import Kiemtradon from './pages/users/kiemtradon/Kiemtradon';
 
-
-
-
-
-
+import ChatWidget from './components/chat';
 
 
 function App() {
-
-
   return (
     <div className="App">
       <Router>
@@ -53,9 +47,8 @@ function App() {
           <Route path="/Detail_product" element={<Detail_product />} />
           <Route path="/admin/Product" element={<Product />} />
           <Route path="/Cart" element={<Cart />} />
-          <Route path="/Thanhtoan" element={<Thanhtoan />} />
+          <Route path="/thanh-toan" element={<Thanhtoan />} />
           <Route path="/kiemtradon" element={<Kiemtradon />} />
-
 
           <Route path="/category/raucuqua" element={<Raucuqua />} />
           <Route path="/category/douonggiaikhat" element={<Douonggiaikhat />} />
@@ -67,7 +60,6 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/goccuahang" element={<Goccuahang />} />
 
-
           <Route path="/cctpsm" element={<Cctpsm />} />
           <Route path="/cdcvbc" element={<Cdcvbc />} />
           <Route path="/dlmj" element={<Dlmj />} />
@@ -77,21 +69,15 @@ function App() {
           <Route path="/hrctddhmn" element={<Hrctddhmn />} />
           <Route path="/thongtinkhachhang" element={<Thongtinkh />} />
 
-
-
           <Route path="/account/login" element={<Dn />} />
           <Route path="/account/register" element={<Dk />} />
 
-
-
-
           <Route path="/admin/dangnhap" element={<Dangnhapadmin />} />
           <Route path="/Detail/:title/:id" element={<Detail />} />
-
         </Routes>
       </Router>
 
-
+      <ChatWidget />
 
     </div>
   );
