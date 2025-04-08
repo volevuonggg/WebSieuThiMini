@@ -1,42 +1,46 @@
-import React, { useState, useEffect } from "react";
-import "./Sandouudai.css";
-import { Link } from "react-router-dom";
-import axios from 'axios';
-import Header from "../../../../components/header/Header";
-import Footer from "../../../../components/footer/Footer";
-import bannerImage from '../../../../assets/users/banner/banner-uudai.jpg';
+"use client"
+
+import { useState, useEffect } from "react"
+import "../../../../style/categories/CategoryPage.css"
+import { Link } from "react-router-dom"
+import axios from "axios"
+import Header from "../../../../components/header/Header"
+import Footer from "../../../../components/footer/Footer"
+import bannerImage from "../../../../assets/users/banner/banner-uudai.jpg"
 
 export default function Sandouudai() {
-  const [category, setcategory] = useState([]);
-  const [slsptgh, setslsptgh] = useState(0);
-  const userData = localStorage.getItem('userData');
-  const user = userData ? JSON.parse(userData).user : null;
-  const userId = user ? user.id : null;
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
+  const [category, setcategory] = useState([])
+  const [slsptgh, setslsptgh] = useState(0)
+  const userData = localStorage.getItem("userData")
+  const user = userData ? JSON.parse(userData).user : null
+  const userId = user ? user.id : null
+  const [activeCategory, setActiveCategory] = useState("Tất cả")
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BASEURL}/api/users/${userId}/slsptgh`)
+    axios
+      .get(`${process.env.REACT_APP_BASEURL}/api/users/${userId}/slsptgh`)
       .then((response) => {
-        setslsptgh(response.data);
+        setslsptgh(response.data)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  }, [userId]);
+        console.log(error)
+      })
+  }, [userId])
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BASEURL}/api/categoryproduct`)
+    axios
+      .get(`${process.env.REACT_APP_BASEURL}/api/categoryproduct`)
       .then((response) => {
-        setcategory(response.data.sandouudai);
+        setcategory(response.data.sandouudai)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+        console.log(error)
+      })
+  }, [])
 
   const handleCategoryClick = (category) => {
-    setActiveCategory(category);
-  };
+    setActiveCategory(category)
+  }
 
   return (
     <div className="wrapper">
@@ -82,7 +86,7 @@ export default function Sandouudai() {
 
           <div className="category-content">
             <div className="category-banner">
-              <img src={bannerImage} alt="Banner ưu đãi" className="banner-image" />
+              <img src={bannerImage || "/placeholder.svg"} alt="Banner ưu đãi" className="banner-image" />
               <div className="banner-overlay">
                 <h2>Siêu Ưu Đãi</h2>
                 <p>Tiết kiệm đến 50% - Số lượng có hạn</p>
@@ -114,6 +118,13 @@ export default function Sandouudai() {
                   <p>Ưu đãi độc quyền</p>
                 </div>
               </div>
+              <div className="benefit-item">
+                <div className="benefit-icon">⏱️</div>
+                <div className="benefit-text">
+                  <h4>Giới hạn</h4>
+                  <p>Chỉ trong hôm nay</p>
+                </div>
+              </div>
             </div>
 
             <div className="category-filters">
@@ -128,47 +139,56 @@ export default function Sandouudai() {
               ))}
             </div>
 
-            <div className="products-grid">
-              {category.map(cate => (
-                <div className="product-card" key={cate.id}>
-                  <div className="product-image-container">
+            <div className="home-products-grid">
+              {category.map((cate) => (
+                <div className="home-product-card" key={cate.id}>
+                  <div className="product-badge">-30%</div>
+                  <div className="home-product-image-container">
                     <img
                       src={`${process.env.REACT_APP_BASEURL}/upload/${cate.hinhanh}`}
                       alt={cate.title}
-                      className="product-image"
+                      className="home-product-image"
                     />
-                    <div className="product-actions">
-                      <Link to={`/Detail/${cate.title}/${cate.id}`} className="view-product">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                        </svg>
+                    <div className="home-product-overlay">
+                      <Link to={`/Detail/${cate.title}/${cate.id}`} className="home-view-product-btn">
+                        Xem chi tiết
                       </Link>
                     </div>
                   </div>
-                  <div className="product-info">
-                    <div className="product-meta-top">
+                  <div className="home-product-info">
+                    <h3 className="home-product-title">
+                      <Link to={`/Detail/${cate.title}/${cate.id}`}>{cate.title}</Link>
+                    </h3>
+                    <div className="product-meta">
                       <span className="product-category">Flash Sale</span>
                       <div className="product-rating">
                         <span className="stars">★★★★☆</span>
                         <span className="rating-count">(45)</span>
                       </div>
                     </div>
-                    <h3 className="product-title">
-                      <Link to={`/Detail/${cate.title}/${cate.id}`}>{cate.title}</Link>
-                    </h3>
-                    <div className="product-meta">
-                      <div className="deal-progress">
-                        <div className="progress-bar" style={{ width: '60%' }}></div>
-                      </div>
-                      <div className="deal-stats">
-                        <span>Đã bán: 30</span>
-                        <span>Còn lại: 20</span>
-                      </div>
+                    <div className="deal-progress">
+                      <div className="progress-bar" style={{ width: "60%" }}></div>
                     </div>
-                    <div className="product-price-wrapper">
-                      <span className="product-price">{cate.gia}đ</span>
+                    <div className="deal-stats">
+                      <span>Đã bán: 30</span>
+                      <span>Còn lại: 20</span>
                     </div>
+                    <div className="home-product-price">
+                      {cate.gia}đ<span className="product-price-original">199.000₫</span>
+                    </div>
+                    <Link to={`/Detail/${cate.title}/${cate.id}`} className="home-add-to-cart-btn deal-button">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                      </svg>
+                      Săn ngay
+                    </Link>
                   </div>
                 </div>
               ))}
@@ -179,5 +199,5 @@ export default function Sandouudai() {
 
       <Footer />
     </div>
-  );
+  )
 }

@@ -1,109 +1,219 @@
+/* Thiết lập chung */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #333;
+}
+
 .wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #f9fafb;
 }
 
 .container {
   flex: 1;
-  padding: 20px;
-  max-width: 600px;
+  padding: 40px 20px;
+  max-width: 220px;
   margin: 0 auto;
+  width: 100%;
 }
 
+/* Panel styling */
 .panel {
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.panel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
 }
 
 .panel-heading {
-  background: #f8f9fa;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
-  border-radius: 8px 8px 0 0;
+  background: #4a90e2;
+  padding: 25px 30px;
+  text-align: center;
+  border-bottom: none;
 }
 
 .panel-heading h2 {
   margin: 0;
-  color: #333;
-  font-size: 24px;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .panel-body {
-  padding: 20px;
+  padding: 30px;
 }
 
+/* Form styling */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #4a5568;
+  font-size: 15px;
 }
 
 .form-control {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
   font-size: 16px;
-  transition: border-color 0.3s ease;
+  background-color: #f8fafc;
+  transition: all 0.3s ease;
 }
 
 .form-control:focus {
   outline: none;
   border-color: #4a90e2;
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+  background-color: #fff;
 }
 
 .btn-success {
-  background: #4a90e2;
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .btn-success:hover {
-  background: #357abd;
+  background: linear-gradient(135deg, #357abd 0%, #2a6496 100%);
+  box-shadow: 0 4px 12px rgba(53, 122, 189, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-success:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(53, 122, 189, 0.3);
 }
 
 .error-message {
-  color: #e74c3c;
-  background: #fde8e8;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  color: #e53e3e;
+  background: #fff5f5;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 8px;
   text-align: center;
+  font-size: 14px;
+  border-left: 4px solid #e53e3e;
 }
 
+/* Đáp ứng thiết bị di động */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 15px;
+  }
+
+  .panel {
+    border-radius: 10px;
+  }
+
+  .panel-heading {
+    padding: 20px;
+  }
+
+  .panel-heading h2 {
+    font-size: 24px;
+  }
+
+  .panel-body {
+    padding: 20px 15px;
+  }
+
+  .form-control {
+    padding: 12px;
+  }
+
+  .btn-success {
+    padding: 12px 20px;
+  }
+}
+
+/* Hiệu ứng hoạt hình khi trang tải */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Thêm một chút style cho liên kết đăng nhập */
 .login-link {
   text-align: center;
-  margin-top: 20px;
-  color: #666;
+  margin-top: 25px;
+  color: #4a5568;
+  font-size: 15px;
 }
 
 .login-link a {
   color: #4a90e2;
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.2s ease;
 }
 
 .login-link a:hover {
+  color: #357abd;
   text-decoration: underline;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
-  
-  .panel {
-    margin-top: 10px;
-  }
-  
-  .panel-body {
-    padding: 15px;
-  }
-} 
+/* Hiệu ứng focus cho các trường nhập liệu */
+.form-group {
+  position: relative;
+}
+
+.form-control:focus+.focus-border {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.focus-border {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: calc(100% - 20px);
+  height: 2px;
+  background: #4a90e2;
+  transform: scaleX(0);
+  transition: all 0.3s ease;
+  opacity: 0;
+}

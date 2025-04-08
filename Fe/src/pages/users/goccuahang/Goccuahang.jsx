@@ -9,6 +9,12 @@ import vegetables from "../../../assets/users/goccuahang/vegetables.jpg"
 import drinks from "../../../assets/users/goccuahang/drinks.jpg"
 import thucphamanlien from "../../../assets/users/goccuahang/thucphamanlien.jpg"
 import thucphamtuoisong from "../../../assets/users/goccuahang/thucphamtuoisong.jpg"
+import camketImage from "../../../assets/users/goccuahang/camket.png"
+import storeImage1 from "../../../assets/users/goccuahang/ch1.jpg"
+import storeImage2 from "../../../assets/users/goccuahang/ch2.jpg"
+import storeImage3 from "../../../assets/users/goccuahang/ch3.jpg"
+import storeImage4 from "../../../assets/users/goccuahang/ch4.jpg"
+
 
 export default function Goccuahang() {
     const [isVisible, setIsVisible] = useState({
@@ -25,12 +31,14 @@ export default function Goccuahang() {
     const testimonialsRef = useRef(null)
     const locationRef = useRef(null)
 
+
     useEffect(() => {
         const observerOptions = {
             root: null,
             rootMargin: "0px",
             threshold: 0.2,
         }
+
 
         const observerCallback = (entries) => {
             entries.forEach((entry) => {
@@ -41,13 +49,16 @@ export default function Goccuahang() {
             })
         }
 
+
         const observer = new IntersectionObserver(observerCallback, observerOptions)
+
 
         if (aboutRef.current) observer.observe(aboutRef.current)
         if (productsRef.current) observer.observe(productsRef.current)
         if (featuresRef.current) observer.observe(featuresRef.current)
         if (testimonialsRef.current) observer.observe(testimonialsRef.current)
         if (locationRef.current) observer.observe(locationRef.current)
+
 
         return () => {
             if (aboutRef.current) observer.unobserve(aboutRef.current)
@@ -57,6 +68,7 @@ export default function Goccuahang() {
             if (locationRef.current) observer.unobserve(locationRef.current)
         }
     }, [])
+
 
     const productCategories = [
         {
@@ -80,6 +92,7 @@ export default function Goccuahang() {
             description: "Thực phẩm tươi sống, được chọn lọc kỹ càng từ các nhà cung cấp uy tín.",
         },
     ]
+
 
     const features = [
         {
@@ -105,6 +118,7 @@ export default function Goccuahang() {
         },
     ]
 
+
     const testimonials = [
         {
             name: "Nguyễn Văn A",
@@ -126,53 +140,20 @@ export default function Goccuahang() {
         },
     ]
 
+
     return (
         <div className="store-wrapper">
             <Header />
 
-            <div className="store-container">
-                {/* Hero Section */}
-                <section className="store-section hero-section">
-                    <div className="hero-content">
-                        <h1 className="hero-title">
-                            Chào mừng đến với
-                            <br />
-                            <span className="highlight">Thực Phẩm Sạch</span>
-                        </h1>
-                        <p className="hero-subtitle">Nơi cung cấp thực phẩm tươi ngon, an toàn và chất lượng</p>
-                        <Link to="/products" className="hero-button">
-                            Khám phá sản phẩm
-                        </Link>
-                    </div>
-                    <div className="hero-overlay"></div>
-                    <div className="hero-image-container">
-                        <img
-                            src={heroImage}
-                            alt="Thực phẩm sạch"
-                            className="hero-image"
-                            onError={(e) => {
-                                e.target.onerror = null
-                                e.target.src = "https://placehold.co/1200x600/e9ecef/495057?text=Thực+Phẩm+Sạch"
-                            }}
-                        />
-                    </div>
-                    <div className="hero-wave">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                            <path
-                                fill="#ffffff"
-                                fillOpacity="1"
-                                d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-                            ></path>
-                        </svg>
-                    </div>
-                </section>
 
+            <div className="store-container">
                 {/* About Section */}
                 <section id="about" ref={aboutRef} className={`store-section about-section ${isVisible.about ? "visible" : ""}`}>
                     <div className="store-section-header">
                         <h2 className="store-section-title">Câu chuyện của chúng tôi</h2>
                         <div className="store-section-divider"></div>
                     </div>
+
 
                     <div className="about-content">
                         <div className="about-image-container">
@@ -187,6 +168,7 @@ export default function Goccuahang() {
                             />
                             <div className="about-image-decoration"></div>
                         </div>
+
 
                         <div className="about-text">
                             <h3>Từ tình yêu với thực phẩm sạch</h3>
@@ -203,6 +185,7 @@ export default function Goccuahang() {
                                 Mỗi sản phẩm tại cửa hàng đều được chọn lọc kỹ lưỡng từ các nhà cung cấp uy tín, đảm bảo tiêu chuẩn an
                                 toàn vệ sinh thực phẩm và giữ được hương vị tự nhiên nhất.
                             </p>
+
 
                             <div className="about-stats">
                                 <div className="stat-item">
@@ -222,6 +205,7 @@ export default function Goccuahang() {
                     </div>
                 </section>
 
+
                 {/* Products Section */}
                 <section id="products" ref={productsRef} className={`store-section products-section ${isVisible.products ? "visible" : ""}`}>
                     <div className="store-section-header">
@@ -229,6 +213,7 @@ export default function Goccuahang() {
                         <div className="store-section-divider"></div>
                         <p className="store-section-subtitle">Đa dạng sản phẩm thực phẩm tươi ngon, chất lượng cao</p>
                     </div>
+
 
                     <div className="products-grid">
                         {productCategories.map((category, index) => (
@@ -255,25 +240,8 @@ export default function Goccuahang() {
                         ))}
                     </div>
 
-                    <div className="products-gallery">
-                        <h3 className="gallery-title">Bộ sưu tập sản phẩm</h3>
-                        <div className="gallery-grid">
-                            {[1, 2, 3, 4, 5, 6].map((item) => (
-                                <div className="gallery-item" key={item}>
-                                    <img
-                                        src={`${process.env.REACT_APP_BASEURL}/upload/gallery-${item}.jpg`}
-                                        alt={`Gallery image ${item}`}
-                                        className="gallery-image"
-                                        onError={(e) => {
-                                            e.target.onerror = null
-                                            e.target.src = `https://placehold.co/300x300/e9ecef/495057?text=Hình+Ảnh+${item}`
-                                        }}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                 </section>
+
 
                 {/* Features Section */}
                 <section id="features" ref={featuresRef} className={`store-section features-section ${isVisible.features ? "visible" : ""}`}>
@@ -281,6 +249,7 @@ export default function Goccuahang() {
                         <h2 className="store-section-title">Tại sao chọn chúng tôi?</h2>
                         <div className="store-section-divider"></div>
                     </div>
+
 
                     <div className="features-grid">
                         {features.map((feature, index) => (
@@ -291,6 +260,7 @@ export default function Goccuahang() {
                             </div>
                         ))}
                     </div>
+
 
                     <div className="store-features-banner">
                         <div className="store-banner-content">
@@ -305,7 +275,7 @@ export default function Goccuahang() {
                         </div>
                         <div className="store-banner-image-container">
                             <img
-                                src={`${process.env.REACT_APP_BASEURL}/upload/quality-guarantee.jpg`}
+                                src={camketImage}
                                 alt="Cam kết chất lượng"
                                 className="store-banner-image"
                                 onError={(e) => {
@@ -317,44 +287,37 @@ export default function Goccuahang() {
                     </div>
                 </section>
 
+
                 {/* Testimonials Section */}
-                <section id="testimonials" ref={testimonialsRef} className={`store-section testimonials-section ${isVisible.testimonials ? "visible" : ""}`}>
+                <section className="home-testimonials-section" id="testimonials" ref={testimonialsRef}>
                     <div className="store-section-header">
                         <h2 className="store-section-title">Khách hàng nói gì về chúng tôi</h2>
                         <div className="store-section-divider"></div>
                     </div>
-
-                    <div className="testimonials-container">
+                    <div className="home-testimonials-grid">
                         {testimonials.map((testimonial, index) => (
-                            <div className="testimonial-card" key={index}>
-                                <div className="testimonial-content">
-                                    <div className="quote-icon">"</div>
-                                    <p className="testimonial-text">{testimonial.comment}</p>
-                                    <div className="testimonial-rating">
-                                        {[...Array(5)].map((_, i) => (
-                                            <span key={i} className={`star ${i < testimonial.rating ? "filled" : ""}`}>
-                                                ★
-                                            </span>
-                                        ))}
-                                    </div>
+                            <div className="home-testimonial-card" key={index}>
+                                <div className="home-testimonial-avatar-container">
+                                    <span style={{ fontSize: "28px", color: "#4caf50", fontWeight: "bold" }}>
+                                        {testimonial.name.charAt(0)}
+                                    </span>
                                 </div>
-                                <div className="testimonial-author">
-                                    <div className="author-avatar">
-                                        <img
-                                            src={testimonial.avatar || "/placeholder.svg"}
-                                            alt={testimonial.name}
-                                            onError={(e) => {
-                                                e.target.onerror = null
-                                                e.target.src = `https://placehold.co/100x100/e9ecef/495057?text=${testimonial.name.charAt(0)}`
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="author-name">{testimonial.name}</div>
+                                <div className="home-testimonial-rating">
+                                    {[...Array(testimonial.rating)].map((_, i) => (
+                                        <span key={i}>★</span>
+                                    ))}
                                 </div>
+                                <p className="home-testimonial-text">
+                                    "{testimonial.comment}"
+                                </p>
+                                <strong className="home-testimonial-name">
+                                    {testimonial.name}
+                                </strong>
                             </div>
                         ))}
                     </div>
                 </section>
+
 
                 {/* Location Section */}
                 <section id="location" ref={locationRef} className={`store-section location-section ${isVisible.location ? "visible" : ""}`}>
@@ -362,6 +325,7 @@ export default function Goccuahang() {
                         <h2 className="store-section-title">Vị trí cửa hàng</h2>
                         <div className="store-section-divider"></div>
                     </div>
+
 
                     <div className="location-content">
                         <div className="location-info">
@@ -396,54 +360,97 @@ export default function Goccuahang() {
                             </Link>
                         </div>
 
+
                         <div className="location-map">
-                            <img
-                                src={`${process.env.REACT_APP_BASEURL}/upload/store-map.jpg`}
-                                alt="Bản đồ cửa hàng"
-                                className="map-image"
-                                onError={(e) => {
-                                    e.target.onerror = null
-                                    e.target.src = "https://placehold.co/600x400/e9ecef/495057?text=Bản+Đồ+Cửa+Hàng"
-                                }}
-                            />
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.9551992533183!2d106.69892607469758!3d10.739747089447194!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f9f60de6cbd%3A0x601b6ebb87601cd!2zMTIzIMSQxrDhu51uZyBOZ3V54buFbiBWxINuIExpbmgsIFTDom4gUGjDuiwgUXXhuq1uIDcsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaA!5e0!3m2!1svi!2s!4v1687698018296!5m2!1svi!2s"
+                                width="100%"
+                                height="450"
+                                style={{ border: 0, borderRadius: '10px', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)' }}
+                                allowFullScreen=""
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                title="Bản đồ cửa hàng"
+                                className="map-iframe"
+                            ></iframe>
                         </div>
                     </div>
+
 
                     <div className="store-images">
                         <h3>Hình ảnh cửa hàng</h3>
                         <div className="store-images-grid">
-                            {[1, 2, 3, 4].map((item) => (
-                                <div className="store-image-item" key={item}>
-                                    <img
-                                        src={`${process.env.REACT_APP_BASEURL}/upload/store-${item}.jpg`}
-                                        alt={`Store image ${item}`}
-                                        className="store-image"
-                                        onError={(e) => {
-                                            e.target.onerror = null
-                                            e.target.src = `https://placehold.co/400x300/e9ecef/495057?text=Hình+Ảnh+Cửa+Hàng+${item}`
-                                        }}
-                                    />
-                                </div>
-                            ))}
+                            <div className="store-image-item" key={1}>
+                                <img
+                                    src={storeImage1}
+                                    alt="Hình ảnh cửa hàng 1"
+                                    className="store-image"
+                                    onError={(e) => {
+                                        e.target.onerror = null
+                                        e.target.src = "https://placehold.co/400x300/e9ecef/495057?text=Hình+Ảnh+Cửa+Hàng+1"
+                                    }}
+                                />
+                            </div>
+                            <div className="store-image-item" key={2}>
+                                <img
+                                    src={storeImage2}
+                                    alt="Hình ảnh cửa hàng 2"
+                                    className="store-image"
+                                    onError={(e) => {
+                                        e.target.onerror = null
+                                        e.target.src = "https://placehold.co/400x300/e9ecef/495057?text=Hình+Ảnh+Cửa+Hàng+2"
+                                    }}
+                                />
+                            </div>
+                            <div className="store-image-item" key={3}>
+                                <img
+                                    src={storeImage3}
+                                    alt="Hình ảnh cửa hàng 3"
+                                    className="store-image"
+                                    onError={(e) => {
+                                        e.target.onerror = null
+                                        e.target.src = "https://placehold.co/400x300/e9ecef/495057?text=Hình+Ảnh+Cửa+Hàng+3"
+                                    }}
+                                />
+                            </div>
+                            <div className="store-image-item" key={4}>
+                                <img
+                                    src={storeImage4}
+                                    alt="Hình ảnh cửa hàng 4"
+                                    className="store-image"
+                                    onError={(e) => {
+                                        e.target.onerror = null
+                                        e.target.src = "https://placehold.co/400x300/e9ecef/495057?text=Hình+Ảnh+Cửa+Hàng+4"
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                 </section>
 
+
                 {/* Call to Action */}
-                <section className="store-section cta-section">
-                    <div className="cta-content">
-                        <h2>Sẵn sàng trải nghiệm thực phẩm sạch?</h2>
-                        <p>Đăng ký nhận thông tin khuyến mãi và sản phẩm mới nhất từ chúng tôi</p>
-                        <form className="cta-form">
-                            <input type="email" placeholder="Nhập email của bạn" required />
-                            <button type="submit">Đăng ký</button>
-                        </form>
+                <section className="home-subscribe-section">
+                    <div className="home-subscribe-container">
+                        <div className="home-subscribe-content">
+                            <h2>Đăng ký nhận thông tin</h2>
+                            <p>Nhận thông tin về sản phẩm mới và khuyến mãi hấp dẫn</p>
+                        </div>
+                        <div className="home-subscribe-form">
+                            <input type="email" placeholder="Nhập email của bạn" className="home-subscribe-input" />
+                            <button className="home-subscribe-button">Đăng ký</button>
+                        </div>
                     </div>
                 </section>
             </div>
+
 
             <Footer />
         </div>
     )
 }
+
+
+
+
 

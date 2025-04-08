@@ -279,7 +279,7 @@ export default function Detail_product() {
                     <tr>
                       <th>Sản phẩm</th>
                       <th>Tình trạng</th>
-                      <th>Chất liệu</th>
+                      <th>Miêu tả</th>
                       <th>Thế mạnh</th>
                       <th>Thao tác</th>
                     </tr>

@@ -10,7 +10,6 @@ import Footer from "../../../components/footer/Footer"
 export default function Thanhtoan() {
   const navigate = useNavigate()
   const location = useLocation()
-  const [emailSent, setEmailSent] = useState(false)
   const [madonhang, setmadonhang] = useState(0)
   const [nganhangclient, setnganhangclient] = useState("")
   const [slsptgh, setslsptgh] = useState(0)
@@ -170,14 +169,12 @@ export default function Thanhtoan() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // Kiểm tra lỗi
     const errors = validateForm()
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors)
       return
     }
 
-    // Kiểm tra giỏ hàng
     if (check.length === 0) {
       alert("Giỏ hàng của bạn đang trống");
       navigate("/cart");
@@ -188,7 +185,6 @@ export default function Thanhtoan() {
       try {
         setIsSubmitting(true);
 
-        // Chuẩn bị dữ liệu gửi đi
         const formData = new FormData()
         formData.append("hovaten", hovaten.trim())
         formData.append("diachi", diachi.trim())
@@ -200,7 +196,7 @@ export default function Thanhtoan() {
         formData.append("pttt", "Trả tiền mặt khi nhận hàng")
         formData.append("sanpham", titles.join(", "))
         formData.append("dkdn_id", userId)
-        formData.append("thanhtien", String(tongcart)) // Đảm bảo số được chuyển thành chuỗi
+        formData.append("thanhtien", String(tongcart))
         formData.append("tinhtrangdon", "Chờ xác nhận")
         formData.append("madonhang", String(madonhang))
 
@@ -213,24 +209,13 @@ export default function Thanhtoan() {
         )
 
         if (response.status === 200) {
-          // Xóa giỏ hàng sau khi đặt hàng thành công
           await axios.delete(`${process.env.REACT_APP_BASEURL}/api/giohang/${userId}/delete-all`)
-
-          try {
-            await axios.post(`${process.env.REACT_APP_BASEURL}/api/send-mail/${userId}`)
-            setEmailSent(true)
-          } catch (error) {
-            console.log("Error sending email:", error)
-          }
-
           alert("Đặt hàng thành công!")
           navigate("/")
         }
       } catch (err) {
         console.log("Error submitting order:", err)
-
-        // Hiển thị thông báo lỗi chi tiết hơn
-        if (err.response && err.response.data && err.response.data.message) {
+        if (err.response?.data?.message) {
           alert(`Lỗi: ${err.response.data.message}`);
         } else {
           alert("Có lỗi xảy ra khi đặt hàng. Vui lòng kiểm tra lại thông tin hoặc thử lại sau.")
@@ -242,9 +227,8 @@ export default function Thanhtoan() {
   }
 
   const handlePayment = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    // Kiểm tra lỗi
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
@@ -252,12 +236,15 @@ export default function Thanhtoan() {
     }
 
     if (!isBankTransfer) {
-      alert("Vui lòng chọn phương thức thanh toán chuyển khoản")
-      return
+      alert("Vui lòng chọn phương thức thanh toán chuyển khoản");
+      return;
     }
 
     try {
       setIsSubmitting(true);
+
+      // Clear any existing payment completion flag
+      localStorage.removeItem("paymentCompleted");
 
       const formDataValues = {
         hovaten: hovaten.trim(),
@@ -272,9 +259,9 @@ export default function Thanhtoan() {
         dkdn_id: userId,
         thanhtien: tongcart,
         madonhang: String(madonhang)
-      }
+      };
 
-      localStorage.setItem("formData", JSON.stringify(formDataValues))
+      localStorage.setItem("formData", JSON.stringify(formDataValues));
 
       const response = await axios.post(
         `${process.env.REACT_APP_BASEURL}/api/vnpay-payment`,
@@ -282,56 +269,62 @@ export default function Thanhtoan() {
           amount: tongcart,
           orderId: madonhang
         }
-      )
+      );
 
       if (response.data.code === '00') {
-        window.location.href = response.data.data
+        window.location.href = response.data.data;
       } else {
-        alert(`Lỗi thanh toán: ${response.data.message || "Không thể tạo yêu cầu thanh toán"}`)
+        alert(`Lỗi thanh toán: ${response.data.message || "Không thể tạo yêu cầu thanh toán"}`);
       }
     } catch (err) {
-      console.log("Error with payment:", err)
-
-      if (err.response && err.response.data && err.response.data.message) {
+      console.log("Error with payment:", err);
+      if (err.response?.data?.message) {
         alert(`Lỗi thanh toán: ${err.response.data.message}`);
       } else {
-        alert("Có lỗi xảy ra khi thanh toán. Vui lòng thử lại sau.")
+        alert("Có lỗi xảy ra khi thanh toán. Vui lòng thử lại sau.");
       }
     } finally {
       setIsSubmitting(false);
     }
-  }
+  };
 
   useEffect(() => {
     const handlePaymentCompletion = async () => {
-      const queryParams = new URLSearchParams(location.search)
-      const vnpResponseCode = queryParams.get("vnp_ResponseCode")
-      const vnpTransactionStatus = queryParams.get("vnp_TransactionStatus")
+      const queryParams = new URLSearchParams(location.search);
+      const vnpResponseCode = queryParams.get("vnp_ResponseCode");
+      const vnpTransactionStatus = queryParams.get("vnp_TransactionStatus");
+      const orderIdFromUrl = queryParams.get("vnp_TxnRef");
 
-      if (vnpResponseCode && !emailSent) {
+      // Check if this order has already been processed
+      const processedOrders = JSON.parse(localStorage.getItem("processedOrders") || "[]");
+
+      if (vnpResponseCode &&
+        vnpTransactionStatus &&
+        orderIdFromUrl &&
+        !processedOrders.includes(orderIdFromUrl)) {
         try {
           if (vnpResponseCode === "00" && vnpTransactionStatus === "00") {
-            const data = JSON.parse(localStorage.getItem("formData"))
+            const data = JSON.parse(localStorage.getItem("formData"));
             if (!data) {
               alert("Không tìm thấy dữ liệu đơn hàng");
               navigate("/cart");
               return;
             }
 
-            const formData = new FormData()
-            formData.append("hovaten", data.hovaten)
-            formData.append("diachi", data.diachi)
-            formData.append("tinh", data.tinh)
-            formData.append("quanhuyen", data.quanhuyen)
-            formData.append("phuongxa", data.phuongxa)
-            formData.append("sdt", data.sdt)
-            formData.append("thongtinbosung", data.thongtinbosung)
-            formData.append("pttt", data.pttt)
-            formData.append("sanpham", data.sanpham)
-            formData.append("dkdn_id", data.dkdn_id)
-            formData.append("thanhtien", String(data.thanhtien))
-            formData.append("tinhtrangdon", "Đã thanh toán")
-            formData.append("madonhang", String(data.madonhang))
+            const formData = new FormData();
+            formData.append("hovaten", data.hovaten);
+            formData.append("diachi", data.diachi);
+            formData.append("tinh", data.tinh);
+            formData.append("quanhuyen", data.quanhuyen);
+            formData.append("phuongxa", data.phuongxa);
+            formData.append("sdt", data.sdt);
+            formData.append("thongtinbosung", data.thongtinbosung);
+            formData.append("pttt", data.pttt);
+            formData.append("sanpham", data.sanpham);
+            formData.append("dkdn_id", data.dkdn_id);
+            formData.append("thanhtien", String(data.thanhtien));
+            formData.append("tinhtrangdon", "Đã thanh toán");
+            formData.append("madonhang", String(data.madonhang));
 
             await axios.post(
               `${process.env.REACT_APP_BASEURL}/api/dondathang`,
@@ -339,30 +332,42 @@ export default function Thanhtoan() {
               {
                 headers: { "content-type": "multipart/form-data" },
               }
-            )
+            );
 
-            await axios.post(`${process.env.REACT_APP_BASEURL}/api/send-mail/${userId}`)
-            await axios.delete(`${process.env.REACT_APP_BASEURL}/api/giohang/${userId}/delete-all`)
+            await axios.delete(`${process.env.REACT_APP_BASEURL}/api/giohang/${userId}/delete-all`);
 
-            setEmailSent(true)
-            // Xóa dữ liệu tạm thời từ localStorage sau khi xử lý thành công
+            // Add order ID to processed orders
+            processedOrders.push(orderIdFromUrl);
+            localStorage.setItem("processedOrders", JSON.stringify(processedOrders));
+
+            // Clear form data
             localStorage.removeItem("formData");
-            alert("Đặt hàng thành công!")
-            navigate("/")
+
+            // Show success message once
+            alert("Đặt hàng thành công!");
+            navigate("/");
           } else {
-            alert("Thanh toán thất bại! Mã lỗi: " + vnpResponseCode)
-            navigate("/cart")
+            alert("Thanh toán thất bại! Mã lỗi: " + vnpResponseCode);
+            navigate("/cart");
           }
         } catch (err) {
-          console.log("Error processing payment completion:", err)
-          alert("Có lỗi xảy ra khi xử lý đơn hàng!")
-          navigate("/cart")
+          console.error("Error processing payment completion:", err);
+          alert("Có lỗi xảy ra khi xử lý đơn hàng!");
+          navigate("/cart");
         }
       }
-    }
+    };
 
-    handlePaymentCompletion()
-  }, [location.search, emailSent, userId, navigate])
+    handlePaymentCompletion();
+
+    // Cleanup
+    return () => {
+      // Keep processed orders for a while to prevent duplicates
+      setTimeout(() => {
+        localStorage.removeItem("processedOrders");
+      }, 5000);
+    };
+  }, [location.search, userId, navigate]);
 
   useEffect(() => {
     const fetchCities = async () => {

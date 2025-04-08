@@ -70,3 +70,5 @@ Route::delete('giohang/{userId}/delete-all', 'App\Http\Controllers\cartcontrolle
 
 Route::delete('detail_product/{id}', 'App\Http\Controllers\detailcontroller@deletedetailproduct');
 Route::delete('admindeletedondathang/{id}', 'App\Http\Controllers\dondathangcontroller@deletedondathang');
+
+Route::get('/chitietdonhang/{id}', 'App\Http\Controllers\dondathangcontroller@getOrderDetails');
